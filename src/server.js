@@ -5,6 +5,7 @@ import timestamp from 'time-stamp';
 import helmet from 'helmet';
 import cors from 'cors';
 import database from './db/database'; // eslint-disable-line
+import routes from './api/routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,8 +19,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors());
 
+// * API routes
+app.use('/api', routes);
+
+// * (Temporary) Heroku Wakeup Route
 app.get('/', (req, res) => {
-  res.send('Server is successfully running!');
+  const message = 'Please go to https://github.com/vzhny/pacientech-api for API usage information.';
+  res.status(200).send(message);
 });
 
 app.listen(port, () => {
