@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import '../models/user.model';
+import '../models/patient.model';
 
 console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_URI}.`);
 
