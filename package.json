@@ -27,7 +27,8 @@
     "helmet": "^3.15.0",
     "mongoose": "^5.4.9",
     "morgan": "^1.9.1",
-    "time-stamp": "^2.2.0"
+    "time-stamp": "^2.2.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

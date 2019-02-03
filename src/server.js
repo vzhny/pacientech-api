@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import timestamp from 'time-stamp';
 import helmet from 'helmet';
 import cors from 'cors';
-import mongoose from './db/database'; // eslint-disable-line
+import database from './db/database'; // eslint-disable-line
 
 const app = express();
 const port = process.env.PORT || 3000;
