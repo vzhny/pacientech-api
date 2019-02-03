@@ -1,12 +1,10 @@
+import './config/config';
 import express from 'express';
 import morgan from 'morgan';
 import timestamp from 'time-stamp';
 import helmet from 'helmet';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import mongoose from './db/database'; // eslint-disable-line
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;

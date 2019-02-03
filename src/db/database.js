@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import {} from 'dotenv/config';
 
 console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_URI}.`);
 

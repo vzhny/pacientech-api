@@ -10,4 +10,13 @@ const presets = [
   ],
 ];
 
-module.exports = { presets };
+const plugins = [
+  [
+    'babel-plugin-dotenv',
+    {
+      replacedModuleName: 'babel-dotenv',
+    },
+  ],
+];
+
+module.exports = { presets, plugins };
