@@ -1,0 +1,33 @@
+{
+  "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
+  "plugins": ["jest"],
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true,
+      "impliedStrict": true,
+      "classes": true
+    }
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
+    "no-shadow": [
+      2,
+      {
+        "hoist": "all",
+        "allow": ["resolve", "reject", "done", "next", "err", "props"]
+      }
+    ],
+    "import/no-unresolved": "off"
+  }
+}
