@@ -68,3 +68,11 @@ export const login = (req, res) => {
     });
   });
 };
+
+// POST logout route controller
+export const logout = (req, res) => {
+  return res.status(200).json({
+    auth: false,
+    token: null,
+  });
+};
