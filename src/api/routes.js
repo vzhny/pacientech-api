@@ -5,6 +5,7 @@ import {
   addOnePatient,
   getOnePatient,
   updateOnePatient,
+  deleteOnePatient,
 } from './controllers/patient-controllers';
 import verifyToken from '../auth/verify-token';
 
@@ -20,7 +21,8 @@ router
 router
   .route('/patients/:patientId')
   .get(verifyToken, getOnePatient)
-  .put(verifyToken, updateOnePatient);
+  .put(verifyToken, updateOnePatient)
+  .delete(verifyToken, deleteOnePatient);
 
 // POST register route
 router.route('/auth/register').post(register);

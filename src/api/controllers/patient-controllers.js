@@ -128,3 +128,34 @@ export const updateOnePatient = (req, res) => {
     return res.status(204).json();
   });
 };
+
+// DELETE patients/:id route controller
+export const deleteOnePatient = (req, res) => {
+  const { patientId } = req.params;
+
+  if (!shortid.isValid(patientId)) {
+    return res.status(400).json({
+      message: `${patientId} is not a valid patient ID.`,
+    });
+  }
+
+  Patient.findOneAndDelete({
+    _id: patientId,
+    createdBy: req.userId,
+  }).exec((err, patient) => {
+    if (err) {
+      return res.status(500).json({
+        message: 'There was an error deleting the patient.',
+        err,
+      });
+    }
+
+    if (!patient) {
+      return res.status(404).json({
+        message: `Could not find/ no patient with ID ${patientId}`,
+      });
+    }
+
+    return res.status(204).json();
+  });
+};
