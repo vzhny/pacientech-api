@@ -1,6 +1,6 @@
 # pacien.tech API
 
-A RESTful api, rewritten using ES6+, to view, add, modify, and delete patient records for private practicing physicians.
+A RESTful API, written in ES6+, to view, add, modify, and delete patient records for private practicing physicians.
 
 ## Documentation
 
