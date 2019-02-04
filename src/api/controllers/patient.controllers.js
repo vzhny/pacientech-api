@@ -25,6 +25,7 @@ export const getAllPatients = (req, res) => {
 // POST patients/ route controller
 export const addOnePatient = (req, res) => {
   const { body, userId } = req;
+
   const {
     name,
     address,
@@ -37,6 +38,12 @@ export const addOnePatient = (req, res) => {
     notes,
     sessions,
   } = body;
+
+  if (name === undefined || null) {
+    return res.status(400).json({
+      message: 'Missing the required name field.',
+    });
+  }
 
   Patient.create(
     {
