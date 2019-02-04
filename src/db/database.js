@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import '../models/user.model';
 import '../models/patient.model';
 
-console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_URI}.`);
+console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_DB_NAME}.`);
 
 const database = mongoose;
 
@@ -14,7 +14,7 @@ database.connect(process.env.MONGODB_URI, {
 
 // Listening for the connection to the database
 database.connection.on('connected', () => {
-  console.log(`Mongoose connected to ${process.env.MONGODB_URI}`);
+  console.log(`Mongoose connected to ${process.env.MONGODB_DB_NAME}`);
 });
 
 // Listening for the disconnection from the database
