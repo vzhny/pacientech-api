@@ -1,14 +1,28 @@
 import express from 'express';
 import { register, login, logout } from './controllers/auth-controllers';
-import { getAllPatients, addOnePatient } from './controllers/patient-controllers';
+import {
+  getAllPatients,
+  addOnePatient,
+  getOnePatient,
+  updateOnePatient,
+  deleteOnePatient,
+} from './controllers/patient-controllers';
+import verifyToken from '../auth/verify-token';
 
 const router = express.Router();
 
 // GET and POST patients routes
 router
   .route('/patients')
-  .get(getAllPatients)
-  .post(addOnePatient);
+  .get(verifyToken, getAllPatients)
+  .post(verifyToken, addOnePatient);
+
+// GET, PUT, and DELETE patients/:id routes
+router
+  .route('/patients/:patientId')
+  .get(verifyToken, getOnePatient)
+  .put(verifyToken, updateOnePatient)
+  .delete(verifyToken, deleteOnePatient);
 
 // POST register route
 router.route('/auth/register').post(register);
