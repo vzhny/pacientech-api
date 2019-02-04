@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 const User = mongoose.model('User');
 
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable consistent-return */
 
 // POST register route controller
 export const register = (req, res) => {
