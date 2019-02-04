@@ -24,19 +24,33 @@ export const getAllPatients = (req, res) => {
 
 // POST patients/ route controller
 export const addOnePatient = (req, res) => {
+  const { body, userId } = res;
+  const {
+    name,
+    address,
+    phoneNumbers,
+    email,
+    lastVisit,
+    reason,
+    diagnosis,
+    totalNumberOfSessions,
+    notes,
+    sessions,
+  } = body;
+
   Patient.create(
     {
-      name: req.body.name,
-      address: req.body.address,
-      phoneNumbers: req.body.phoneNumbers,
-      email: req.body.email,
-      lastVisit: req.body.lastVisit,
-      reason: req.body.reason,
-      diagnosis: req.body.diagnosis,
-      totalNumberOfSessions: req.body.totalNumberOfSessions,
-      notes: req.body.notes,
-      sessions: req.body.sessions,
-      createdBy: new ObjectID(req.userId),
+      name,
+      address,
+      phoneNumbers,
+      email,
+      lastVisit,
+      reason,
+      diagnosis,
+      totalNumberOfSessions,
+      notes,
+      sessions,
+      createdBy: new ObjectID(userId),
     },
     (error, patient) => {
       if (error) {
