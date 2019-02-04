@@ -8,6 +8,9 @@ if (process.env.NODE_ENV !== 'test') {
 
 const database = mongoose;
 
+// Allows use of findOneAndUpdate without using the deprecated method findAndModify
+database.set('useFindAndModify', false);
+
 // Initial database connection attempt
 database.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
