@@ -4,7 +4,7 @@ import { ObjectID } from 'mongodb';
 
 const Patient = mongoose.model('Patient');
 
-// eslint-no-consistent-return: 0
+/* eslint-disable consistent-return */
 
 // GET patients route controller
 export const getAllPatients = (req, res) => {
