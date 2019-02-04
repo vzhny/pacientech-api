@@ -1,9 +1,8 @@
 {
-  "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
-  "plugins": ["jest"],
+  "extends": ["airbnb-base", "prettier"],
   "env": {
     "node": true,
-    "jest": true
+    "mocha": true
   },
   "parserOptions": {
     "ecmaVersion": 8,
@@ -26,7 +25,7 @@
       2,
       {
         "hoist": "all",
-        "allow": ["resolve", "reject", "done", "next", "err", "props"]
+        "allow": ["resolve", "reject", "done", "next", "error", "props"]
       }
     ],
     "import/no-unresolved": "off"
