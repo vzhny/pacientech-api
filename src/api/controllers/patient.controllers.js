@@ -6,7 +6,7 @@ const Patient = mongoose.model('Patient');
 
 /* eslint-disable consistent-return */
 
-// GET patients route controller
+// GET patients/ route controller
 export const getAllPatients = (req, res) => {
   Patient.find({
     createdBy: req.userId,
