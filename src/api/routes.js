@@ -1,12 +1,12 @@
 import express from 'express';
-import { register, login, logout } from './controllers/user-controllers';
+import { register, login, logout } from './controllers/user.controllers';
 import {
   getAllPatients,
   addOnePatient,
   getOnePatient,
   updateOnePatient,
   deleteOnePatient,
-} from './controllers/patient-controllers';
+} from './controllers/patient.controllers';
 import verifyToken from '../auth/verify-token';
 
 const router = express.Router();
