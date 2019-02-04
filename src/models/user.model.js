@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
     validate: {
       isAsync: false,
       validator: isEmail,
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 6,
   },
 });
 

@@ -4,10 +4,17 @@ import jwt from 'jsonwebtoken';
 
 const User = mongoose.model('User');
 
+/* eslint-disable no-underscore-dangle */
+
 // POST register route controller
-// eslint-disable-next-line
 export const register = (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+
+  if (password.length <= 6) {
+    return res.status(400).json({
+      message: 'Please enter a password with a length of 6 or more characters.',
+    });
+  }
 
   User.create(
     {
@@ -20,12 +27,10 @@ export const register = (req, res) => {
       if (error) {
         return res.status(400).json({
           message: 'There was an error registering, please try again.',
+          error,
         });
       }
 
-      // If there is no error, sign a token, send a 201 and enable auth with the token.
-      // The token expires in 24 hours.
-      // eslint-disable-next-line
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 86400 });
 
       return res.status(201).json({
@@ -44,6 +49,7 @@ export const login = (req, res) => {
     if (error) {
       return res.status(400).json({
         message: 'There was an error logging in. Please try again.',
+        error,
       });
     }
 
@@ -54,7 +60,6 @@ export const login = (req, res) => {
     }
 
     if (bcrypt.compareSync(password, user.password)) {
-      // eslint-disable-next-line
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 86400 });
 
       return res.status(200).json({
@@ -63,7 +68,7 @@ export const login = (req, res) => {
       });
     }
 
-    return res.status(401).json({
+    return res.status(404).json({
       message: 'Could not find user or wrong password. Please try again.',
     });
   });
