@@ -15,7 +15,7 @@ before(done => {
 });
 
 describe('POST /api/auth/register', () => {
-  it('should register a new user with a status of 201', done => {
+  it('should register a new user successfully', done => {
     const userInformation = {
       firstName: 'John',
       lastName: 'Doe',
@@ -94,6 +94,88 @@ describe('POST /api/auth/register', () => {
 
         expect(status).to.equal(400);
         expect(message).to.equal('Please enter a password with a length of 6 or more characters.');
+
+        done();
+      });
+  });
+});
+
+describe('POST /api/auth/login', () => {
+  it('should log in an existing user successfully', done => {
+    const userInformation = {
+      email: 'john@gmail.com',
+      password: 'test1234',
+    };
+
+    request(app)
+      .post('/api/auth/login')
+      .send(userInformation)
+      .then(res => {
+        const { status } = res;
+
+        expect(status).to.equal(200);
+
+        done();
+      });
+  });
+
+  it("should respond with the user's first and last names, a true auth flag and auth token after successfully registration", done => {
+    const userInformation = {
+      email: 'john@gmail.com',
+      password: 'test1234',
+    };
+
+    request(app)
+      .post('/api/auth/login')
+      .send(userInformation)
+      .then(res => {
+        const { body } = res;
+        const { firstName, lastName, auth, token } = body;
+
+        expect(firstName).to.equal('John');
+        expect(lastName).to.equal('Doe');
+        expect(auth).to.be.true;
+        expect(token).to.be.a('string');
+
+        done();
+      });
+  });
+
+  it('should respond with a general error message when an unregistered email address is entered', done => {
+    const userInformation = {
+      email: 'steve@gmail.com',
+      password: 'test1234',
+    };
+
+    request(app)
+      .post('/api/auth/login')
+      .send(userInformation)
+      .then(res => {
+        const { status, body } = res;
+        const { message } = body;
+
+        expect(status).to.equal(404);
+        expect(message).to.equal('Could not find user or wrong password. Please try again.');
+
+        done();
+      });
+  });
+
+  it('should respond with a general error message when an incorrect password is entered', done => {
+    const userInformation = {
+      email: 'john@gmail.com',
+      password: '1234test',
+    };
+
+    request(app)
+      .post('/api/auth/login')
+      .send(userInformation)
+      .then(res => {
+        const { status, body } = res;
+        const { message } = body;
+
+        expect(status).to.equal(404);
+        expect(message).to.equal('Could not find user or wrong password. Please try again.');
 
         done();
       });
