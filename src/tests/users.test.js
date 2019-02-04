@@ -35,7 +35,7 @@ describe('POST /api/auth/register', () => {
       });
   });
 
-  it('should respond with an true auth flag and auth token after successfully registration', done => {
+  it('should respond with an true auth flag and auth token after successful registration', done => {
     const userInformation = {
       firstName: 'Sarah',
       lastName: 'Conner',
@@ -119,7 +119,7 @@ describe('POST /api/auth/login', () => {
       });
   });
 
-  it("should respond with the user's first and last names, a true auth flag and auth token after successfully registration", done => {
+  it("should respond with the user's first and last names, a true auth flag and auth token after successfully logging in", done => {
     const userInformation = {
       email: 'john@gmail.com',
       password: 'test1234',
@@ -176,6 +176,23 @@ describe('POST /api/auth/login', () => {
 
         expect(status).to.equal(404);
         expect(message).to.equal('Could not find user or wrong password. Please try again.');
+
+        done();
+      });
+  });
+});
+
+describe('POST api/auth/logout', () => {
+  it('should respond with a false auth flag and null auth token', done => {
+    request(app)
+      .post('/api/auth/logout')
+      .then(res => {
+        const { status, body } = res;
+        const { auth, token } = body;
+
+        expect(status).to.equal(200);
+        expect(auth).to.be.false;
+        expect(token).to.be.null;
 
         done();
       });
