@@ -49,3 +49,33 @@ export const addOnePatient = (req, res) => {
     }
   );
 };
+
+// GET patients/:id route controller
+export const getOnePatient = (req, res) => {
+  const { patientId } = req.params;
+
+  if (!shortid.isValid(patientId)) {
+    return res.status(400).json({
+      message: `${patientId} is not a valid patient ID.`,
+    });
+  }
+
+  Patient.findOne({
+    _id: patientId,
+    createdBy: req.userId,
+  }).exec((error, patient) => {
+    if (error) {
+      return res.status(500).json({
+        message: 'There was a problem retrieving the entered patient from the database.',
+        error,
+      });
+    }
+    if (!patient) {
+      return res.status(404).json({
+        message: `Could not find/ no patient with ID ${patientId}`,
+      });
+    }
+    // If the patient was found, send a 200 and the found patient
+    return res.status(200).json(patient);
+  });
+};
