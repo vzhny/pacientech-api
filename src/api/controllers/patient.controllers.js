@@ -24,7 +24,7 @@ export const getAllPatients = (req, res) => {
 
 // POST patients/ route controller
 export const addOnePatient = (req, res) => {
-  const { body, userId } = res;
+  const { body, userId } = req;
   const {
     name,
     address,
