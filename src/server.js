@@ -12,13 +12,7 @@ const port = process.env.PORT || 3000;
 
 // * Express Middleware
 if (process.env.NODE_ENV !== 'test') {
-  app.use(
-    morgan(
-      `${timestamp(
-        'MM/DD/YYYY HH:mm:ss'
-      )} :method :url :status :res[content-length] - :response-time ms`
-    )
-  );
+  app.use(morgan(`${timestamp('MM/DD/YYYY')} :method :url :status STATUS - :response-time ms`));
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
