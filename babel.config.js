@@ -17,6 +17,7 @@ const plugins = [
       replacedModuleName: 'babel-dotenv',
     },
   ],
+  '@babel/plugin-proposal-object-rest-spread',
 ];
 
 module.exports = { presets, plugins };

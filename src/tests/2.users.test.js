@@ -1,18 +1,8 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import app from '../server';
-import database from '../db/database';
 
 /* eslint-disable no-unused-expressions */
-
-before(done => {
-  database.connection.on('connected', () => {
-    database.connection.dropCollection('users');
-    console.log('  Successfully dropped the users collection.');
-  });
-
-  done();
-});
 
 describe('POST /api/auth/register', () => {
   it('should register a new user successfully', done => {

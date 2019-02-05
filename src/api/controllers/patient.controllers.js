@@ -6,7 +6,7 @@ const Patient = mongoose.model('Patient');
 
 /* eslint-disable consistent-return */
 
-// GET patients route controller
+// GET patients/ route controller
 export const getAllPatients = (req, res) => {
   Patient.find({
     createdBy: req.userId,
@@ -24,19 +24,40 @@ export const getAllPatients = (req, res) => {
 
 // POST patients/ route controller
 export const addOnePatient = (req, res) => {
+  const { body, userId } = req;
+
+  const {
+    name,
+    address,
+    phoneNumbers,
+    email,
+    lastVisit,
+    reason,
+    diagnosis,
+    totalNumberOfSessions,
+    notes,
+    sessions,
+  } = body;
+
+  if (name === undefined || null) {
+    return res.status(400).json({
+      message: 'Missing the required name field.',
+    });
+  }
+
   Patient.create(
     {
-      name: req.body.name,
-      address: req.body.address,
-      phoneNumbers: req.body.phoneNumbers,
-      email: req.body.email,
-      lastVisit: req.body.lastVisit,
-      reason: req.body.reason,
-      diagnosis: req.body.diagnosis,
-      totalNumberOfSessions: req.body.totalNumberOfSessions,
-      notes: req.body.notes,
-      sessions: req.body.sessions,
-      createdBy: new ObjectID(req.userId),
+      name,
+      address,
+      phoneNumbers,
+      email,
+      lastVisit,
+      reason,
+      diagnosis,
+      totalNumberOfSessions,
+      notes,
+      sessions,
+      createdBy: new ObjectID(userId),
     },
     (error, patient) => {
       if (error) {

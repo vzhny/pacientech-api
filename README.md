@@ -1,6 +1,6 @@
 # pacien.tech API
 
-A RESTful api, rewritten using ES6+, to view, add, modify, and delete patient records for private practicing physicians.
+A RESTful API, written in ES6+, to view, add, modify, and delete patient records for private practicing physicians.
 
 ## Documentation
 
@@ -175,7 +175,7 @@ The patient routes are only accessible to users that are currently logged in.
   ```json
   {
     "auth": true,
-    "token": JWT token
+    "token": JWT_Token
   }
   ```
 
@@ -186,7 +186,7 @@ The patient routes are only accessible to users that are currently logged in.
   ```json
   {
     "auth": true,
-    "token": JWT token
+    "token": JWT_Token
   }
   ```
 
@@ -206,4 +206,3 @@ The patient routes are only accessible to users that are currently logged in.
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
-
