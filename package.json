@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "description": "A RESTful api to view, add, modify, and delete patient records for private practicing physicians.",
   "scripts": {
-    "start": "NODE_ENV=production node production/server.js",
-    "build": "rm -rf ./production/ && babel src -d production --ignore 'src/**/*.test.js'",
+    "start": "NODE_ENV=production node lib/server.js",
+    "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/**/*.test.js'",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "lint": "eslint --ext .js src/",
-    "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 3000 --exit src/**/*.test.js"
+    "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 10000 --exit src/**/*.test.js"
   },
   "main": "src/server.js",
   "repository": "https://github.com/vzhny/pacientech-api",
@@ -57,6 +57,7 @@
     "eslint-plugin-import": "^2.16.0",
     "husky": "^1.3.1",
     "mocha": "^5.2.0",
+    "node-localstorage": "^1.3.1",
     "nodemon": "^1.18.9",
     "nyc": "^13.1.0",
     "supertest": "^3.4.2"
