@@ -7,7 +7,7 @@ import {
   updateOnePatient,
   deleteOnePatient,
 } from './controllers/patient.controllers';
-import verifyToken from '../auth/verify-token';
+import verifyToken from './middleware/auth/verify.token';
 
 const router = express.Router();
 
