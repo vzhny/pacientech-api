@@ -2,6 +2,8 @@
 
 A RESTful API, written in ES6+, to view, add, modify, and delete patient records for private practicing physicians.
 
+![](https://img.shields.io/travis/vzhny/pacientech-api.svg?style=for-the-badge)
+
 ## Documentation
 
 The patient routes are only accessible to users that are currently logged in.
