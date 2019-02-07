@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import shortid from 'shortid';
 import isEmail from 'validator/lib/isEmail';
 import moment from 'moment';
 
@@ -33,9 +32,9 @@ const phoneNumbersSchema = new mongoose.Schema({
 });
 
 const patientSchema = new mongoose.Schema({
-  _id: {
+  patientId: {
     type: String,
-    default: shortid.generate(),
+    required: true,
   },
   name: {
     type: String,
