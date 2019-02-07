@@ -3,32 +3,63 @@
   "version": "0.1.0",
   "description": "A RESTful api to view, add, modify, and delete patient records for private practicing physicians.",
   "scripts": {
-    "start": "node dist/server.js",
-    "build": "rm -rf ./dist/ && babel src -d dist",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "start": "NODE_ENV=production node lib/server.js",
+    "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/**/*.test.js'",
+    "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
+    "lint": "eslint --ext .js src/",
+    "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 10000 --exit src/**/*.test.js"
   },
   "main": "src/server.js",
   "repository": "https://github.com/vzhny/pacientech-api",
   "author": "Diego Vizhnay <diego@vzhny.com> (https://vizhnay.io)",
   "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint",
+      "pre-push": "yarn run test"
+    }
+  },
+  "nyc": {
+    "exclude": [
+      "babel.config.js",
+      "src/db/",
+      "src/config",
+      "**/*.test.js"
+    ]
+  },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "babel-plugin-dotenv": "^0.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "helmet": "^3.15.0"
+    "helmet": "^3.15.0",
+    "jsonwebtoken": "^8.4.0",
+    "moment": "^2.24.0",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.9",
+    "morgan": "^1.9.1",
+    "shortid": "^2.2.14",
+    "time-stamp": "^2.2.0",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
     "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jest": "^22.2.2",
-    "jest": "^24.0.0",
-    "nodemon": "^1.18.9"
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0",
+    "node-localstorage": "^1.3.1",
+    "nodemon": "^1.18.9",
+    "nyc": "^13.1.0",
+    "supertest": "^3.4.2"
   }
 }

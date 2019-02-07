@@ -10,4 +10,14 @@ const presets = [
   ],
 ];
 
-module.exports = { presets };
+const plugins = [
+  [
+    'babel-plugin-dotenv',
+    {
+      replacedModuleName: 'babel-dotenv',
+    },
+  ],
+  '@babel/plugin-proposal-object-rest-spread',
+];
+
+module.exports = { presets, plugins };
