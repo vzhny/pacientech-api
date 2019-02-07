@@ -87,6 +87,9 @@ typings/
 # Ignoring dist/ folder
 dist/
 
+# Ignoring the localstorage folder created when testing
+localstorage/
+
 # End of https://www.gitignore.io/api/node
 
 # Created by https://www.gitignore.io/api/linux

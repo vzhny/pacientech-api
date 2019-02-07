@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import shortid from 'shortid';
 import { ObjectID } from 'mongodb';
+import shortid from 'shortid';
 
 const Patient = mongoose.model('Patient');
 
@@ -9,7 +9,7 @@ const Patient = mongoose.model('Patient');
 // GET patients/ route controller
 export const getAllPatients = (req, res) => {
   Patient.find({
-    createdBy: req.userId,
+    createdBy: res.locals.userId,
   }).exec((error, patients) => {
     if (error) {
       return res.status(500).json({
@@ -24,7 +24,7 @@ export const getAllPatients = (req, res) => {
 
 // POST patients/ route controller
 export const addOnePatient = (req, res) => {
-  const { body, userId } = req;
+  const { body } = req;
 
   const {
     name,
@@ -39,14 +39,20 @@ export const addOnePatient = (req, res) => {
     sessions,
   } = body;
 
-  if (name === undefined || null) {
+  if (
+    name === undefined ||
+    null ||
+    (address === undefined || null) ||
+    (reason === undefined || null)
+  ) {
     return res.status(400).json({
-      message: 'Missing the required name field.',
+      message: 'Missing required field(s).',
     });
   }
 
   Patient.create(
     {
+      patientId: shortid.generate(),
       name,
       address,
       phoneNumbers,
@@ -57,7 +63,7 @@ export const addOnePatient = (req, res) => {
       totalNumberOfSessions,
       notes,
       sessions,
-      createdBy: new ObjectID(userId),
+      createdBy: new ObjectID(res.locals.userId),
     },
     (error, patient) => {
       if (error) {
@@ -76,15 +82,9 @@ export const addOnePatient = (req, res) => {
 export const getOnePatient = (req, res) => {
   const { patientId } = req.params;
 
-  if (!shortid.isValid(patientId)) {
-    return res.status(400).json({
-      message: `${patientId} is not a valid patient ID.`,
-    });
-  }
-
   Patient.findOne({
-    _id: patientId,
-    createdBy: req.userId,
+    patientId,
+    createdBy: res.locals.userId,
   }).exec((error, patient) => {
     if (error) {
       return res.status(500).json({
@@ -105,14 +105,7 @@ export const getOnePatient = (req, res) => {
 
 // PUT patients/:id route controller
 export const updateOnePatient = (req, res) => {
-  // Retrieve the patientId from the url
   const { patientId } = req.params;
-
-  if (!shortid.isValid(patientId)) {
-    return res.status(400).json({
-      message: `${patientId} is not a valid patient ID.`,
-    });
-  }
 
   const updatedInformation = {
     address: req.body.address,
@@ -128,14 +121,14 @@ export const updateOnePatient = (req, res) => {
 
   Patient.findOneAndUpdate(
     {
-      _id: patientId,
-      createdBy: req.userId,
+      patientId,
+      createdBy: res.locals.userId,
     },
     updatedInformation
   ).exec((error, patient) => {
     if (error) {
       return res.status(500).json({
-        message: 'There was an error finding the patient.',
+        message: 'There was an error editing the patient.',
         error,
       });
     }
@@ -154,15 +147,9 @@ export const updateOnePatient = (req, res) => {
 export const deleteOnePatient = (req, res) => {
   const { patientId } = req.params;
 
-  if (!shortid.isValid(patientId)) {
-    return res.status(400).json({
-      message: `${patientId} is not a valid patient ID.`,
-    });
-  }
-
   Patient.findOneAndDelete({
-    _id: patientId,
-    createdBy: req.userId,
+    patientId,
+    createdBy: res.locals.userId,
   }).exec((err, patient) => {
     if (err) {
       return res.status(500).json({

@@ -3,18 +3,17 @@ import '../models/user.model';
 import '../models/patient.model';
 
 if (process.env.NODE_ENV !== 'test') {
-  console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_DB_NAME}.`);
+  console.log(`Mongoose is attempting to connect to ${process.env.MONGODB_URI}.`);
 }
 
 const database = mongoose;
-
-// Allows use of findOneAndUpdate without using the deprecated method findAndModify
-database.set('useFindAndModify', false);
 
 // Initial database connection attempt
 database.connect(process.env.MONGODB_URI, {
   useCreateIndex: true,
   useNewUrlParser: true,
+  useFindAndModify: false,
+  autoReconnect: true,
 });
 
 // Listening for the connection to the database
@@ -28,13 +27,14 @@ database.connection.on('connected', () => {
 database.connection.on('disconnected', () => {
   if (process.env.NODE_ENV !== 'test') {
     console.log('Mongoose disconnected');
+    process.exit(1);
   }
 });
 
 // Listening for any errors from the database
-database.connection.on('error', err => {
+database.connection.on('error', error => {
   if (process.env.NODE_ENV !== 'test') {
-    console.log('Mongoose connection error:', err);
+    console.log('Mongoose connection error:', error);
   }
 });
 
