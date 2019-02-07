@@ -35,6 +35,8 @@ export const register = (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: 86400 });
 
       return res.status(201).json({
+        firstName: user.firstName,
+        lastName: user.lastName,
         auth: true,
         token,
       });
