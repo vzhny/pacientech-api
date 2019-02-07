@@ -1,15 +1,18 @@
 {
   "name": "pacientech-api",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "A RESTful api to view, add, modify, and delete patient records for private practicing physicians.",
   "scripts": {
-    "start": "NODE_ENV=production node lib/server.js",
-    "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/**/*.test.js'",
+    "start": "yarn run build && NODE_ENV=production node lib/server.js",
+    "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/tests/'",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "lint": "eslint --ext .js src/",
     "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 10000 --exit src/**/*.test.js"
   },
-  "main": "src/server.js",
+  "engines": {
+    "yarn": "1.13.0"
+  },
+  "main": "lib/server.js",
   "repository": "https://github.com/vzhny/pacientech-api",
   "author": "Diego Vizhnay <diego@vzhny.com> (https://vizhnay.io)",
   "license": "MIT",

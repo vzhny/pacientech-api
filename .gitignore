@@ -84,8 +84,8 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-# Ignoring dist/ folder
-dist/
+# Ignoring lib/ folder
+lib/
 
 # Ignoring the localstorage folder created when testing
 localstorage/
