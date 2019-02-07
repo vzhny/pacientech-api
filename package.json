@@ -1,9 +1,10 @@
 {
   "name": "pacientech-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A RESTful api to view, add, modify, and delete patient records for private practicing physicians.",
   "scripts": {
-    "start": "yarn run build && NODE_ENV=production node lib/server.js",
+    "start": "node lib/server.js",
+    "heroku-postbuild": "yarn run build",
     "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/tests/'",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "lint": "eslint --ext .js src/",
