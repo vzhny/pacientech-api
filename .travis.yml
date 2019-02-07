@@ -5,8 +5,3 @@ cache:
   yarn: true
   directories:
     - 'node_modules'
-
-addons:
-  apt:
-    config:
-      retries: true

@@ -10,7 +10,7 @@
     "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 10000 --exit src/**/*.test.js"
   },
   "engines": {
-    "yarn": "^1.13.0"
+    "yarn": "1.13.2"
   },
   "main": "lib/server.js",
   "repository": "https://github.com/vzhny/pacientech-api",
