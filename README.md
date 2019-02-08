@@ -17,8 +17,8 @@ The patient routes are only accessible to users that are currently logged in.
     {
       "lastVisit": "09/27/18",
       "totalNumberOfSessions": 5,
-      "_id": ObjectId("auto-generated-mongodb-id"),
-      "patientId" "generated-short-id",
+      "_id": "ObjectId('...')",
+      "patientId": "generated-short-id",
       "phoneNumbers": [
         {
           "_id": "5bad2d7729d2ef7b733e9724",
@@ -74,8 +74,8 @@ The patient routes are only accessible to users that are currently logged in.
       "reason": "This is the reason field",
       "diagnosis": "This is the diagnosis field",
       "notes": "This is the notes field",
-      "createdBy": ObjectId("your-user-id-here"),
-      "__v": 1
+      "createdBy": "ObjectId('...')",
+      "__v": 0
     }
   ]
   ```
@@ -83,80 +83,10 @@ The patient routes are only accessible to users that are currently logged in.
   - On success, returns the added patient
   ```json
   {
-      "lastVisit": "09/27/18",
-      "totalNumberOfSessions": 5,
-      "_id": ObjectId("auto-generated-mongodb-id"),
-      "patientId" "generated-short-id",
-      "phoneNumbers": [
-        {
-          "_id": "5bad2d7729d2ef7b733e9724",
-          "type": "home",
-          "number": "333-333-3333"
-        },
-        {
-          "_id": "5bad2d7729d2ef7b733e9723",
-          "type": "work",
-          "number": "555-555-5555"
-        }
-      ],
-      "sessions": [
-        {
-          "number": 1,
-          "confirmed": true,
-          "_id": "5bad2d7729d2ef7b733e9728",
-          "date": "09/24/18",
-          "notes": "This is notes for 09/24"
-        },
-        {
-          "number": 2,
-          "confirmed": true,
-          "_id": "5bad2d7729d2ef7b733e9727",
-          "date": "09/25/18",
-          "notes": "This is notes for 09/25"
-        },
-        {
-          "number": 3,
-          "confirmed": false,
-          "_id": "5bad2d7729d2ef7b733e9726",
-          "date": "09/26/18",
-          "notes": "This is notes for 09/26"
-        },
-        {
-          "number": 4,
-          "confirmed": true,
-          "_id": "5bad2d7729d2ef7b733e9725",
-          "date": "09/27/18",
-          "notes": "This is first set of notes for 09/27"
-        },
-        {
-          "number": 5,
-          "confirmed": true,
-          "_id": "5bad3055d2b8ba7f7149a27e",
-          "date": "09/27/18",
-          "notes": "This is the second set of notes for 09/27"
-        }
-      ],
-      "name": "John Doe",
-      "address": "12-34 Main St.",
-      "email": "john@gmail.com",
-      "reason": "This is the reason field",
-      "diagnosis": "This is the diagnosis field",
-      "notes": "This is the notes field",
-      "createdBy": ObjectId("your-user-id-here"),
-      "__v": 1
-    }
-  ```
-
-**/patients/:patientId**
-
-- GET - Retrieves the specific patient with the provided patient ID parameter
-  - On success, returns a patient object
-  ```json
-  {
     "lastVisit": "09/27/18",
     "totalNumberOfSessions": 5,
-    "_id": ObjectId("auto-generated-mongodb-id"),
-    "patientId" "generated-short-id",
+    "_id": "ObjectId('...')",
+    "patientId": "generated-short-id",
     "phoneNumbers": [
       {
         "_id": "5bad2d7729d2ef7b733e9724",
@@ -212,8 +142,78 @@ The patient routes are only accessible to users that are currently logged in.
     "reason": "This is the reason field",
     "diagnosis": "This is the diagnosis field",
     "notes": "This is the notes field",
-    "createdBy": ObjectId("your-user-id-here"),
-    "__v": 1
+    "createdBy": "ObjectId('...')",
+    "__v": 0
+  }
+  ```
+
+**/patients/:patientId**
+
+- GET - Retrieves the specific patient with the provided patient ID parameter
+  - On success, returns a patient object
+  ```json
+  {
+    "lastVisit": "09/27/18",
+    "totalNumberOfSessions": 5,
+    "_id": "ObjectId('...')",
+    "patientId": "generated-short-id",
+    "phoneNumbers": [
+      {
+        "_id": "5bad2d7729d2ef7b733e9724",
+        "type": "home",
+        "number": "333-333-3333"
+      },
+      {
+        "_id": "5bad2d7729d2ef7b733e9723",
+        "type": "work",
+        "number": "555-555-5555"
+      }
+    ],
+    "sessions": [
+      {
+        "number": 1,
+        "confirmed": true,
+        "_id": "5bad2d7729d2ef7b733e9728",
+        "date": "09/24/18",
+        "notes": "This is notes for 09/24"
+      },
+      {
+        "number": 2,
+        "confirmed": true,
+        "_id": "5bad2d7729d2ef7b733e9727",
+        "date": "09/25/18",
+        "notes": "This is notes for 09/25"
+      },
+      {
+        "number": 3,
+        "confirmed": false,
+        "_id": "5bad2d7729d2ef7b733e9726",
+        "date": "09/26/18",
+        "notes": "This is notes for 09/26"
+      },
+      {
+        "number": 4,
+        "confirmed": true,
+        "_id": "5bad2d7729d2ef7b733e9725",
+        "date": "09/27/18",
+        "notes": "This is first set of notes for 09/27"
+      },
+      {
+        "number": 5,
+        "confirmed": true,
+        "_id": "5bad3055d2b8ba7f7149a27e",
+        "date": "09/27/18",
+        "notes": "This is the second set of notes for 09/27"
+      }
+    ],
+    "name": "John Doe",
+    "address": "12-34 Main St.",
+    "email": "john@gmail.com",
+    "reason": "This is the reason field",
+    "diagnosis": "This is the diagnosis field",
+    "notes": "This is the notes field",
+    "createdBy": "ObjectId('...')",
+    "__v": 0
   }
   ```
 - PUT - Updates the specific patient with the provided patient ID parameter
@@ -230,7 +230,7 @@ The patient routes are only accessible to users that are currently logged in.
     "firstName": "users-first-name",
     "lastName": "users-last-name",
     "auth": true,
-    "token": JWT_Token
+    "token": "JWT_Token"
   }
   ```
 
@@ -243,7 +243,7 @@ The patient routes are only accessible to users that are currently logged in.
     "firstName": "users-first-name",
     "lastName": "users-last-name",
     "auth": true,
-    "token": JWT_Token
+    "token": "JWT_Token"
   }
   ```
 
@@ -264,4 +264,4 @@ The patient routes are only accessible to users that are currently logged in.
 - [Babel](https://babeljs.io/)
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [Mocha](https://mochajs.org/)
+- [Jest](https://jestjs.io/)
