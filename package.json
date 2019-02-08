@@ -7,7 +7,7 @@
     "build": "rm -rf ./lib/ && babel src -d lib --ignore 'src/tests/'",
     "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "lint": "eslint --ext .js src/",
-    "test": "NODE_ENV=test nyc mocha --require @babel/register --colors --timeout 10000 --exit src/**/*.test.js"
+    "test": "NODE_ENV=test jest --colors --runInBand --coverage --detectOpenHandles src/tests/index.test.js"
   },
   "engines": {
     "yarn": "1.13.0"
@@ -22,13 +22,17 @@
       "pre-push": "yarn run test"
     }
   },
-  "nyc": {
-    "exclude": [
-      "babel.config.js",
-      "src/db/",
-      "src/config",
-      "**/*.test.js"
-    ]
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**",
+      "!**/tests/**",
+      "!**/db/**",
+      "!**/config/**"
+    ],
+    "coverageDirectory": "./src/tests/coverage"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -52,17 +56,16 @@
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
     "@babel/preset-env": "^7.3.1",
-    "@babel/register": "^7.0.0",
-    "chai": "^4.2.0",
+    "babel-jest": "^24.1.0",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.2.2",
     "husky": "^1.3.1",
-    "mocha": "^5.2.0",
+    "jest": "^24.1.0",
     "node-localstorage": "^1.3.1",
     "nodemon": "^1.18.9",
-    "nyc": "^13.1.0",
     "supertest": "^3.4.2"
   }
 }
