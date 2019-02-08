@@ -5,9 +5,6 @@ import app from '../app';
 /* eslint-disable no-undef */
 
 const userTests = () => {
-  let firstAuthToken = '';
-  let secondAuthToken = '';
-
   describe('POST /api/auth/register', () => {
     it('should register a new user successfully (first user)', done => {
       const userInformation = {
@@ -22,14 +19,13 @@ const userTests = () => {
         .send(userInformation)
         .then(res => {
           const { status, body } = res;
-          const { auth, token } = body;
+          const { firstName, lastName, auth, token } = body;
 
           expect(status).toEqual(201);
+          expect(firstName).toEqual('John');
+          expect(lastName).toEqual('Doe');
           expect(auth).toBeTruthy();
           expect(token).toBeTruthy();
-
-          firstAuthToken = token;
-          localStorage.setItem('firstAuthToken', token);
 
           done();
         })
@@ -61,9 +57,6 @@ const userTests = () => {
           expect(auth).toBeTruthy();
           expect(token).toBeTruthy();
 
-          secondAuthToken = token;
-          localStorage.setItem('secondAuthToken', token);
-
           done();
         })
         .catch(error => {
@@ -71,19 +64,6 @@ const userTests = () => {
 
           done(message);
         });
-    });
-
-    it('should make sure that both auth tokens are different', done => {
-      // This test is temporary -- using it to debug why two other tests are failing.
-      try {
-        expect(firstAuthToken).not.toEqual(secondAuthToken);
-
-        done();
-      } catch (error) {
-        const { message } = error;
-
-        done(message);
-      }
     });
 
     it('should fail the registration of an email already in use', done => {
@@ -140,29 +120,6 @@ const userTests = () => {
   });
 
   describe('POST /api/auth/login', () => {
-    it('should log in an existing user successfully', done => {
-      const userInformation = {
-        email: 'john_doe@gmail.com',
-        password: 'test1234',
-      };
-
-      request(app)
-        .post('/api/auth/login')
-        .send(userInformation)
-        .then(res => {
-          const { status } = res;
-
-          expect(status).toEqual(200);
-
-          done();
-        })
-        .catch(error => {
-          const { message } = error;
-
-          done(message);
-        });
-    });
-
     it("should respond with the user's first and last names, a true auth flag and auth token after successfully logging in", done => {
       const userInformation = {
         email: 'john_doe@gmail.com',
@@ -173,9 +130,10 @@ const userTests = () => {
         .post('/api/auth/login')
         .send(userInformation)
         .then(res => {
-          const { body } = res;
+          const { status, body } = res;
           const { firstName, lastName, auth, token } = body;
 
+          expect(status).toEqual(200);
           expect(firstName).toEqual('John');
           expect(lastName).toEqual('Doe');
           expect(auth).toBeTruthy();
