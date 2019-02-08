@@ -1,6 +1,11 @@
 import request from 'supertest';
 import app from '../app';
 import server from '../server';
+import {
+  patientOneInformation,
+  patientTwoInformation,
+  incompletePatientInformation,
+} from './mock/patients';
 import { closeDatabaseConnection } from './databaseSetup';
 
 /* eslint-disable no-unused-expressions */
@@ -12,82 +17,75 @@ const patientTests = () => {
     await server.close();
   });
 
-  const firstAuthToken = localStorage.getItem('firstAuthToken');
-  const secondAuthToken = localStorage.getItem('secondAuthToken');
+  let firstAuthToken;
+  let secondAuthToken;
+  let patientOneId;
+  let patientTwoId;
 
   const firstValidAuthTokenUser = request.agent(app);
   const secondValidAuthTokenUser = request.agent(app);
   const invalidAuthTokenUser = request.agent(app);
   const noAuthTokenUser = request.agent(app);
 
-  const patientOneInformation = {
-    name: 'Gilda Shields',
-    address: '9914 Maia Locks',
-    phoneNumbers: [
-      { type: 'cell', number: '111-111-1111' },
-      { type: 'home', number: '222-222-2222' },
-    ],
-    email: 'gilda@gmail.com',
-    lastVisit: '02/04/19',
-    reason: 'Foot pain',
-    diagnosis: 'Stubbed toe',
-    totalNumberOfSessions: 1,
-    notes: 'N/A',
-    sessions: [
-      {
-        number: 1,
-        date: '02/04/19',
-        notes: 'N/A',
-        confirmed: true,
-      },
-    ],
-  };
+  describe('POST /api/auth/login (auth token retrieval)', () => {
+    it('should log an existing user successfully (first user)', done => {
+      const firstUserInformation = {
+        email: 'john_doe@gmail.com',
+        password: 'test1234',
+      };
 
-  const patientTwoInformation = {
-    name: 'Barrett Hilpert',
-    address: '269 Tillman Court',
-    phoneNumbers: [{ type: 'cell', number: '333-333-3333' }],
-    email: 'barrett@gmail.com',
-    lastVisit: '02/05/19',
-    reason: 'Hurt back while exercising',
-    diagnosis: 'Strained muscle',
-    totalNumberOfSessions: 2,
-    notes: 'Wear a lifting belt',
-    sessions: [
-      {
-        number: 1,
-        date: '02/04/19',
-        notes: 'N/A',
-        confirmed: true,
-      },
-      {
-        number: 2,
-        date: '02/05/19',
-        notes: 'N/A',
-        confirmed: true,
-      },
-    ],
-  };
+      firstValidAuthTokenUser
+        .post('/api/auth/login')
+        .send(firstUserInformation)
+        .then(res => {
+          const { status, body } = res;
+          const { firstName, lastName, auth, token } = body;
 
-  const incompletePatientInformation = {
-    phoneNumbers: [{ type: 'cell', number: '444-444-4444' }],
-    email: 'barrett@gmail.com',
-    lastVisit: '02/05/19',
-    diagnosis: 'Headaches',
-    totalNumberOfSessions: 1,
-    notes: 'Take baby aspirin',
-    sessions: [
-      {
-        number: 1,
-        date: '02/04/19',
-        notes: 'Working too much',
-        confirmed: true,
-      },
-    ],
-  };
+          expect(status).toEqual(200);
+          expect(firstName).toEqual('John');
+          expect(lastName).toEqual('Doe');
+          expect(auth).toBeTruthy();
+          expect(token).toBeTruthy();
 
-  let patientOneId = '';
-  let patientTwoId = '';
+          firstAuthToken = token;
+
+          done();
+        })
+        .catch(error => {
+          const { message } = error;
+          done(message);
+        });
+    });
+
+    it('should log an existing user successfully (second user)', done => {
+      const secondUserInformation = {
+        email: 'sarah_conner@gmail.com',
+        password: '1234test',
+      };
+
+      secondValidAuthTokenUser
+        .post('/api/auth/login')
+        .send(secondUserInformation)
+        .then(res => {
+          const { status, body } = res;
+          const { firstName, lastName, auth, token } = body;
+
+          expect(status).toEqual(200);
+          expect(firstName).toEqual('Sarah');
+          expect(lastName).toEqual('Conner');
+          expect(auth).toBeTruthy();
+          expect(token).toBeTruthy();
+
+          secondAuthToken = token;
+
+          done();
+        })
+        .catch(error => {
+          const { message } = error;
+          done(message);
+        });
+    });
+  });
 
   describe('POST /api/patients', () => {
     it('should add one single patient successfully if a valid auth token is provided (first user)', done => {
