@@ -150,11 +150,11 @@ export const deleteOnePatient = (req, res) => {
   Patient.findOneAndDelete({
     patientId,
     createdBy: res.locals.userId,
-  }).exec((err, patient) => {
-    if (err) {
+  }).exec((error, patient) => {
+    if (error) {
       return res.status(500).json({
         message: 'There was an error deleting the patient.',
-        err,
+        error,
       });
     }
 
