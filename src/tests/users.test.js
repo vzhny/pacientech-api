@@ -1,14 +1,13 @@
 import request from 'supertest';
-import { expect } from 'chai';
-import app from '../server';
+import app from '../app';
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-undef */
 
-let firstAuthToken = '';
-let secondAuthToken = '';
+const userTests = () => {
+  let firstAuthToken = '';
+  let secondAuthToken = '';
 
-describe('User Tests', () => {
   describe('POST /api/auth/register', () => {
     it('should register a new user successfully (first user)', done => {
       const userInformation = {
@@ -25,9 +24,9 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { auth, token } = body;
 
-          expect(status).to.equal(201);
-          expect(auth).to.be.true;
-          expect(token).to.be.a('string');
+          expect(status).toEqual(201);
+          expect(auth).toBeTruthy();
+          expect(token).toBeTruthy();
 
           firstAuthToken = token;
           localStorage.setItem('firstAuthToken', token);
@@ -56,11 +55,11 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { firstName, lastName, auth, token } = body;
 
-          expect(status).to.equal(201);
-          expect(firstName).to.equal('Sarah');
-          expect(lastName).to.equal('Conner');
-          expect(auth).to.be.true;
-          expect(token).to.be.a('string');
+          expect(status).toEqual(201);
+          expect(firstName).toEqual('Sarah');
+          expect(lastName).toEqual('Conner');
+          expect(auth).toBeTruthy();
+          expect(token).toBeTruthy();
 
           secondAuthToken = token;
           localStorage.setItem('secondAuthToken', token);
@@ -77,7 +76,7 @@ describe('User Tests', () => {
     it('should make sure that both auth tokens are different', done => {
       // This test is temporary -- using it to debug why two other tests are failing.
       try {
-        expect(firstAuthToken).to.not.equal(secondAuthToken);
+        expect(firstAuthToken).not.toEqual(secondAuthToken);
 
         done();
       } catch (error) {
@@ -101,7 +100,7 @@ describe('User Tests', () => {
         .then(res => {
           const { status } = res;
 
-          expect(status).to.equal(400);
+          expect(status).toEqual(400);
 
           done();
         })
@@ -127,10 +126,8 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { message } = body;
 
-          expect(status).to.equal(400);
-          expect(message).to.equal(
-            'Please enter a password with a length of 6 or more characters.'
-          );
+          expect(status).toEqual(400);
+          expect(message).toEqual('Please enter a password with a length of 6 or more characters.');
 
           done();
         })
@@ -155,7 +152,7 @@ describe('User Tests', () => {
         .then(res => {
           const { status } = res;
 
-          expect(status).to.equal(200);
+          expect(status).toEqual(200);
 
           done();
         })
@@ -179,10 +176,10 @@ describe('User Tests', () => {
           const { body } = res;
           const { firstName, lastName, auth, token } = body;
 
-          expect(firstName).to.equal('John');
-          expect(lastName).to.equal('Doe');
-          expect(auth).to.be.true;
-          expect(token).to.be.a('string');
+          expect(firstName).toEqual('John');
+          expect(lastName).toEqual('Doe');
+          expect(auth).toBeTruthy();
+          expect(token).toBeTruthy();
 
           done();
         })
@@ -206,8 +203,8 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { message } = body;
 
-          expect(status).to.equal(404);
-          expect(message).to.equal('Could not find user or wrong password. Please try again.');
+          expect(status).toEqual(404);
+          expect(message).toEqual('Could not find user or wrong password. Please try again.');
 
           done();
         })
@@ -231,8 +228,8 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { message } = body;
 
-          expect(status).to.equal(404);
-          expect(message).to.equal('Could not find user or wrong password. Please try again.');
+          expect(status).toEqual(404);
+          expect(message).toEqual('Could not find user or wrong password. Please try again.');
 
           done();
         })
@@ -252,9 +249,9 @@ describe('User Tests', () => {
           const { status, body } = res;
           const { auth, token } = body;
 
-          expect(status).to.equal(200);
-          expect(auth).to.be.false;
-          expect(token).to.be.null;
+          expect(status).toEqual(200);
+          expect(auth).toBeFalsy();
+          expect(token).toBeNull();
 
           done();
         })
@@ -265,4 +262,6 @@ describe('User Tests', () => {
         });
     });
   });
-});
+};
+
+export default userTests;
